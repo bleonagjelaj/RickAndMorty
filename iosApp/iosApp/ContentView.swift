@@ -8,6 +8,8 @@ struct ContentView: View {
 	}
 }
 
+
+
 struct CharactersScreen: View {
     @ObservedObject var viewModel: IOSCharactersViewModel
 
@@ -21,7 +23,7 @@ struct CharactersScreen: View {
             NavigationStack{
                 List(viewModel.state.characters, id: \.self) { characterModel in
                     NavigationLink{
-                        CharacterDetailsScreen()
+                        CharacterDetailsScreen(characterId: characterModel.characterId)
                     } label:  {
                         CharacterRow(character: characterModel)
                     }
@@ -79,12 +81,12 @@ extension CharactersScreen {
 
 
 struct CharacterDetailsScreen: View {
-    //let characterId: Int32
-
+    let characterId: Int32
     @ObservedObject var viewModel: IOSCharacterDetailsViewModel
 
-    init() {
-        self.viewModel = IOSCharacterDetailsViewModel()
+    init(characterId: Int32) {
+        self.characterId = characterId
+        self.viewModel = IOSCharacterDetailsViewModel(characterId: characterId)
     }
 
     var body: some View {
@@ -120,7 +122,7 @@ struct CharacterDetailsScreen: View {
 
 extension CharacterDetailsScreen {
     @MainActor class IOSCharacterDetailsViewModel: ObservableObject {
-        //let characterId: Int32
+        let characterId: Int32
         private let viewModel : CharacterDetailsViewModel
         private var handle: DisposableHandle?
         @Published var state: CharacterDetailsState =
@@ -133,9 +135,10 @@ extension CharacterDetailsScreen {
                 pictureUrl : ""
             ))
 
-        init() {
+        init(characterId: Int32) {
+            self.characterId = characterId
             self.viewModel = CharacterDetailsViewModel(coroutineScope: nil)
-            viewModel.getStateUpdate(characterId: 1)
+            viewModel.getStateUpdate(characterId: characterId)
             getCharacterDetails()
         }
 
