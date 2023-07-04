@@ -9,6 +9,7 @@ import com.example.rickandmorty.domain.repositories.CharacterDetailsRepository
 import com.example.rickandmorty.domain.repositories.CharactersRepository
 import com.example.rickandmorty.domain.usecases.GetCharacterDetailsUseCase
 import com.example.rickandmorty.domain.usecases.GetCharactersUseCase
+import com.example.rickandmorty.viewmodels.AndroidCharactersViewModel
 import com.example.rickandmorty.viewmodels.CharactersViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.KoinApplication
@@ -30,9 +31,8 @@ actual val commonModule = module {
     single { CharactersMapper() }
     factory { GetCharactersUseCase(get()) }
     factory { GetCharacterDetailsUseCase(get()) }
-
 }
 
 val viewModelModule: Module = module {
-    viewModel { CharactersViewModel(get(), get()) }
+    viewModel { AndroidCharactersViewModel(get(), get()) }
 }

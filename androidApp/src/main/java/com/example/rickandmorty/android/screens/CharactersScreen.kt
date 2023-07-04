@@ -64,10 +64,10 @@ fun CharacterListItem(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .padding(6.dp)
-            .clickable { onItemClicked(itemViewState.id) }
+            .clickable { onItemClicked(itemViewState.characterId) }
     ) {
         Text(
-            text = itemViewState.id.toString(),
+            text = itemViewState.characterId.toString(),
             fontSize = 18.sp,
             modifier = Modifier.size(25.dp)
         )

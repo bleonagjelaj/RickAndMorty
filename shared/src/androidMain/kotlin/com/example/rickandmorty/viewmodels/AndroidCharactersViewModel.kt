@@ -10,18 +10,22 @@ import com.example.rickandmorty.domain.usecases.GetCharactersUseCase
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 
-class CharactersViewModel(
+class AndroidCharactersViewModel(
     private val getCharactersUseCase: GetCharactersUseCase,
     private val getCharacterDetailsUseCase: GetCharacterDetailsUseCase
 ) : ViewModel(), KoinComponent {
     //for characters list
     private var _characters = MutableLiveData<List<CharacterModel>>()
     val characters: MutableLiveData<List<CharacterModel>> = _characters
+    private val charactersVM: CharactersViewModel = CharactersViewModel(viewModelScope)
+    private val characterDetailsVM: CharacterDetailsViewModel =
+        CharacterDetailsViewModel(viewModelScope)
 
     fun getAllCharacters() {
+        charactersVM.getStateUpdate()
         viewModelScope.launch {
-            getCharactersUseCase.invoke().collect { charactersList ->
-                _characters.value = charactersList
+            charactersVM.state.collect { charactersState ->
+                _characters.value = charactersState.characters
             }
         }
     }
@@ -30,10 +34,11 @@ class CharactersViewModel(
     private var _characterDetails = MutableLiveData<CharacterDetailsModel>()
     val characterDetails: MutableLiveData<CharacterDetailsModel> = _characterDetails
 
-    fun getCharacterDetails(id: Int) {
+    fun getCharacterDetails(characterId: Int) {
+        characterDetailsVM.getStateUpdate(characterId)
         viewModelScope.launch {
-            getCharacterDetailsUseCase.invoke(id).collect { characterDetailsModel ->
-                characterDetails.value = characterDetailsModel
+            characterDetailsVM.state.collect { characterDetailsState ->
+                characterDetails.value = characterDetailsState.characterDetails
             }
         }
     }

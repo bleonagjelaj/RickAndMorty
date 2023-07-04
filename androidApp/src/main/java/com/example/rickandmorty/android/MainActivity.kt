@@ -15,11 +15,11 @@ import com.example.rickandmorty.android.screens.CharacterDetails
 import com.example.rickandmorty.android.screens.CharactersList
 import com.example.rickandmorty.domain.models.CharacterDetailsModel
 import com.example.rickandmorty.domain.models.CharacterModel
-import com.example.rickandmorty.viewmodels.CharactersViewModel
+import com.example.rickandmorty.viewmodels.AndroidCharactersViewModel
 import org.koin.android.ext.android.inject
 
 class MainActivity : ComponentActivity() {
-    private val viewModel: CharactersViewModel by inject()
+    private val viewModel: AndroidCharactersViewModel by inject()
     private val charactersScreenRouteKey = "charactersScreen"
     private val characterDetailsScreenRouteKey = "characterDetailsScreen"
 

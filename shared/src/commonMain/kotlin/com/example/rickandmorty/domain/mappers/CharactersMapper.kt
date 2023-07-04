@@ -9,7 +9,7 @@ class CharactersMapper {
         characters.results.forEach { character ->
             characterList.add(
                 CharacterModel(
-                    id = character.id,
+                    characterId = character.id,
                     name = character.name,
                     pictureUrl = character.image
                 )
