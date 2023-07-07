@@ -4,24 +4,13 @@ import com.frakton.rickandmorty.data.remote.models.Character
 import com.frakton.rickandmorty.data.remote.models.CharactersResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.get
-import io.ktor.serialization.kotlinx.json.json
-import kotlinx.serialization.json.Json
+import org.koin.core.component.KoinComponent
 
-class RickAndMortyApi {
-    private val apiUrl = "https://rickandmortyapi.com/api"
-
-    private val httpClient = HttpClient {
-        install(ContentNegotiation) {
-            json(Json {
-                isLenient = true
-                ignoreUnknownKeys = true
-                useAlternativeNames = false
-            })
-        }
-    }
-
+class RickAndMortyApi(
+    private val apiUrl: String,
+    private val httpClient: HttpClient
+): KoinComponent {
     suspend fun getAllCharacters(): CharactersResponse {
         return httpClient.get("$apiUrl/character").body()
     }

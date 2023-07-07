@@ -5,15 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.frakton.rickandmorty.domain.models.CharacterDetailsModel
 import com.frakton.rickandmorty.domain.models.CharacterModel
-import com.frakton.rickandmorty.domain.usecases.GetCharacterDetailsUseCase
-import com.frakton.rickandmorty.domain.usecases.GetCharactersUseCase
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 
-class AndroidCharactersViewModel(
-    private val getCharactersUseCase: GetCharactersUseCase,
-    private val getCharacterDetailsUseCase: GetCharacterDetailsUseCase
-) : ViewModel(), KoinComponent {
+class AndroidCharactersViewModel : ViewModel(), KoinComponent {
     //for characters list
     private var _characters = MutableLiveData<List<CharacterModel>>()
     val characters: MutableLiveData<List<CharacterModel>> = _characters

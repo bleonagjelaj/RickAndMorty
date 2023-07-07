@@ -9,6 +9,10 @@ import com.frakton.rickandmorty.domain.repositories.CharacterDetailsRepository
 import com.frakton.rickandmorty.domain.repositories.CharactersRepository
 import com.frakton.rickandmorty.domain.usecases.GetCharacterDetailsUseCase
 import com.frakton.rickandmorty.domain.usecases.GetCharactersUseCase
+import io.ktor.client.HttpClient
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.json.Json
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
@@ -18,7 +22,19 @@ fun initKoin(): KoinApplication = startKoin {
 }
 
 actual val commonModule = module {
-    single { RickAndMortyApi() }
+    single { "https://rickandmortyapi.com/api" }
+    single {
+        HttpClient {
+            install(ContentNegotiation) {
+                json(Json {
+                    isLenient = true
+                    ignoreUnknownKeys = true
+                    useAlternativeNames = false
+                })
+            }
+        }
+    }
+    single { RickAndMortyApi(get(), get()) }
     single { GetCharacterDetailsInteractor(get()) }
     single { GetCharactersInteractor(get()) }
     single { CharacterDetailsRepository(get(), get()) }

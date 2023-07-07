@@ -61,7 +61,6 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation("io.ktor:ktor-client-android:$ktorVersion")
-                implementation("com.squareup.sqldelight:android-driver:$sqlDelightVersion")
                 implementation("androidx.lifecycle:lifecycle-livedata-core-ktx:2.6.1")
                 implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
                 implementation("io.insert-koin:koin-androidx-compose:3.3.0")
@@ -71,8 +70,7 @@ kotlin {
         val iosMain by getting {
             dependencies {
                 implementation("io.ktor:ktor-client-darwin:$ktorVersion")
-                implementation("com.squareup.sqldelight:native-driver:$sqlDelightVersion")
-            }
+             }
         }
     }
 }
